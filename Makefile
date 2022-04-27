@@ -13,8 +13,10 @@ html-hub:
 clean:
 	rm -r figurs/
 	rm -r audio/     
+	rm -rf _build
 	mkdir figurs
 	mkdir audio
+	mkdir _build
 
     
 all:

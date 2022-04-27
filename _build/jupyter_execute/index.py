@@ -193,6 +193,12 @@ except:
 # In[6]:
 
 
+time
+
+
+# In[7]:
+
+
 # both H1 and L1 will have the same time vector, so:
 time = time_H1
 # the time sample interval (uniformly sampled!)
@@ -212,7 +218,7 @@ print("For L1, {0} out of {1} seconds contain usable DATA".format(bits.sum(), le
  
 
 
-# In[7]:
+# In[8]:
 
 
 # plot +- deltat seconds around the event:
@@ -249,7 +255,7 @@ if make_plots:
 # There's a signal in these data! 
 # For the moment, let's ignore that, and assume it's all noise.
 
-# In[8]:
+# In[9]:
 
 
 make_psds = 1
@@ -315,7 +321,7 @@ if make_plots:
 # B. Allen et al., PHYSICAL REVIEW D 85, 122006 (2012) ; http://arxiv.org/abs/gr-qc/0509116
 # 
 
-# In[9]:
+# In[10]:
 
 
 BNS_range = 1
@@ -404,7 +410,7 @@ if BNS_range:
 # 
 # We will plot the whitened strain data, along with the signal template, after the matched filtering section, below.
 
-# In[10]:
+# In[11]:
 
 
 # function to whiten data
@@ -423,7 +429,7 @@ if BNS_range:
 
 whiten_data = 1
 if whiten_data:
-    # now whiten the data from H1 and L1, and the template (use H1 PSD):
+    # now whiten the data from H1 and L1, and tstrain_H1_whiten = utils.whiten(strain_H1,psd_H1,dt)he template (use H1 PSD):
     strain_H1_whiten = utils.whiten(strain_H1,psd_H1,dt)
     strain_L1_whiten = utils.whiten(strain_L1,psd_L1,dt)
     
@@ -438,7 +444,7 @@ if whiten_data:
 # 
 # Now let's plot a short time-frequency spectrogram around our event:
 
-# In[11]:
+# In[12]:
 
 
 if make_plots:
@@ -486,7 +492,7 @@ if make_plots:
 # 
 # Now let's zoom in on where we think the signal is, using the whitened data, in the hope of seeing a chirp:
 
-# In[12]:
+# In[13]:
 
 
 if make_plots:
@@ -532,7 +538,7 @@ if make_plots:
 # 
 # As noted above, the results won't be identical to what is in the LIGO-Virgo papers, since we're skipping many subtleties, such as combining many consistent templates.
 
-# In[13]:
+# In[14]:
 
 
 # read in the template (plus and cross) and parameters for the theoretical waveform
@@ -545,7 +551,7 @@ except:
     quit()
 
 
-# In[14]:
+# In[15]:
 
 
 # extract metadata from the template file:
@@ -674,7 +680,7 @@ if make_plots:
 # GW150914: First results from the search for binary black hole coalescence with Advanced LIGO,
 # The LIGO Scientific Collaboration, the Virgo Collaboration, http://arxiv.org/abs/1602.03839
 
-# In[15]:
+# In[16]:
 
 
 # -- To calculate the PSD of the data, choose an overlap and a window (common to all detectors)
@@ -775,6 +781,7 @@ for det in dets:
         
         utils.plot_figs(eventname, time, timemax, SNR, pcolor, det, tevent, strain_whitenbp, template_match,
                         template_fft, datafreq, d_eff, freqs, data_psd, fs, plottype)
+        
 
 
 # ### Notes on these results
@@ -789,7 +796,7 @@ for det in dets:
 # 
 # Make wav (sound) files from the filtered, downsampled data, +-2s around the event.
 
-# In[16]:
+# In[17]:
 
 
 # make wav (sound) files from the whitened data, +-2s around the event.
@@ -822,7 +829,7 @@ utils.write_wavfile("audio/"+eventname+"_template_whiten.wav",int(fs), template_
 # 
 # With good headphones, you may be able to hear a faint thump in the middle; that's our signal!
 
-# In[17]:
+# In[18]:
 
 
 from IPython.display import Audio
@@ -832,7 +839,7 @@ print(fna)
 Audio(fna)
 
 
-# In[18]:
+# In[19]:
 
 
 fna = "audio/"+eventname+"_H1_whitenbp.wav"
@@ -846,7 +853,7 @@ Audio(fna)
 # 
 # The code below will shift the data up by 400 Hz (by taking an FFT, shifting/rolling the frequency series, then inverse fft-ing). The resulting sound file will be noticibly more high-pitched, and the signal will be easier to hear.
 
-# In[19]:
+# In[20]:
 
 
 # function that shifts frequency of a band-passed signal
@@ -883,7 +890,7 @@ utils.write_wavfile("audio/"+eventname+"_template_shifted.wav",int(fs), template
 
 # ### Listen to the frequency-shifted template and data
 
-# In[20]:
+# In[21]:
 
 
 fna = "audio/"+eventname+"_template_shifted.wav"
@@ -891,7 +898,7 @@ print(fna)
 Audio(fna)
 
 
-# In[21]:
+# In[22]:
 
 
 fna = "audio/"+eventname+"_H1_shifted.wav"
@@ -907,7 +914,7 @@ Audio(fna)
 # 
 # We also unpack the DQ and HW injection bits to check what their values are.
 
-# In[22]:
+# In[23]:
 
 
 data_segments = 1
@@ -961,7 +968,7 @@ if data_segments:
 
 # ## Construct a csv file containing the whitened data and template
 
-# In[23]:
+# In[24]:
 
 
 # time vector around event
